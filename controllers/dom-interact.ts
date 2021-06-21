@@ -18,3 +18,6 @@ const wheelForm = document.querySelector("#wheelFormId") as HTMLFormElement;
     const diametro3 = wheelForm.querySelector("#wheelDiametro3") as HTMLInputElement;
     const marca4 = wheelForm.querySelector("#wheelMarca4") as HTMLInputElement;
     const diametro4 = wheelForm.querySelector("#wheelDiametro4") as HTMLInputElement;
+
+//Guardo div donde irá la info de los coches que mostremos
+const container = document.querySelector("#carInfo") as HTMLUListElement;

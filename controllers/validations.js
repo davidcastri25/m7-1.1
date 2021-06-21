@@ -27,6 +27,24 @@ function carValidate() {
         //Añadimos clase is-valid
         matricula.classList.add("is-valid");
     }
+    //Validamos marca
+    if (marca.value == "") {
+        marca.classList.add("is-invalid");
+        carForm.querySelector("#errorCarMarca").textContent = "El campo es obligatorio";
+        acumErrores++;
+    }
+    else {
+        marca.classList.add("is-valid");
+    }
+    //Validamos color
+    if (color.value == "") {
+        color.classList.add("is-invalid");
+        carForm.querySelector("#errorCarColor").textContent = "El campo es obligatorio";
+        acumErrores++;
+    }
+    else {
+        color.classList.add("is-valid");
+    }
     //Devolvemos el acumulador de errores
     return acumErrores;
 }

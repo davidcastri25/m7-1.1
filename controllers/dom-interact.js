@@ -17,3 +17,5 @@ var marca3 = wheelForm.querySelector("#wheelMarca3");
 var diametro3 = wheelForm.querySelector("#wheelDiametro3");
 var marca4 = wheelForm.querySelector("#wheelMarca4");
 var diametro4 = wheelForm.querySelector("#wheelDiametro4");
+//Guardo div donde irá la info de los coches que mostremos
+var container = document.querySelector("#carInfo");
