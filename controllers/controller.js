@@ -1,14 +1,16 @@
 "use strict";
+//Array para almacenar objetos de la clase Car. Será como una base de datos de los coches que vayamos creando
+var carBBDD = [];
 //Variable global, accesible desde cualquier función
 var car;
-//Guardo los dos formularios en constantes
-var carForm = document.querySelector("#carFormId");
-var wheelForm = document.querySelector("#wheelFormId");
-/* ////////// Evento que creará el coche ////////// */
+/* ////////// Evento lanzado por el formulario de coche ////////// */
 carForm.addEventListener("submit", function (e) {
+    //Variables
+    var errores;
+    //Anulamos comportamiento por defecto del navegador por el evento submit. De esta forma no refrescará
     e.preventDefault();
-    console.log(carForm);
-    console.log(wheelForm);
+    //Validamos llamando a la función correspondiente
+    errores = carValidate();
 });
 //Función que crea un coche. Parámetros: matrícula (string), marca (string), color (string)
 /*function createCar (plate: string, brand: string, color: string){

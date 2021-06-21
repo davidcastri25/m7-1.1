@@ -1,16 +1,21 @@
+//Array para almacenar objetos de la clase Car. Será como una base de datos de los coches que vayamos creando
+let carBBDD: Car[] = [];
+
 //Variable global, accesible desde cualquier función
 let car: Car;
 
-//Guardo los dos formularios en constantes
-const carForm = document.querySelector("#carFormId") as HTMLFormElement;
-const wheelForm = document.querySelector("#wheelFormId") as HTMLFormElement;
 
 
-/* ////////// Evento que creará el coche ////////// */
+/* ////////// Evento lanzado por el formulario de coche ////////// */
 carForm.addEventListener("submit", (e: Event) => {
+    //Variables
+    let errores: number;
+
+    //Anulamos comportamiento por defecto del navegador por el evento submit. De esta forma no refrescará
     e.preventDefault();
-    console.log(carForm);
-    console.log(wheelForm);
+    
+    //Validamos llamando a la función correspondiente
+    errores = carValidate();
 });
 
 

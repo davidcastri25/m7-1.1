@@ -32,7 +32,7 @@
         </header>
 
         <!-- Formulario de coche -->
-        <form action="#" method="post" id="carFormId" name="carForm" class="row mb-4 d-flex">
+        <form action="#" method="post" id="carFormId" name="carForm" class="row mb-4 d-flex p-3">
 
             <!-- Matrícula -->
             <div class="form-group mb-3 col-4">
@@ -74,7 +74,7 @@
         </form>
 
         <!-- Formulario de rueda -->
-        <form action="#" method="post" id="wheelFormId" name="wheelForm" class="row mb-4 d-none">
+        <form action="#" method="post" id="wheelFormId" name="wheelForm" class="row mb-4 d-none p-3">
         
             <!-- Marca 1 -->
             <div class="form-group mb-3 col-3">
@@ -173,7 +173,7 @@
     </div>
     
     <!-- Mostrar coches -->
-    <section class="mt-5">
+    <section class="mt-5 p-3">
         <h3>Lista de coches</h3>
 
         <!-- Output list -->
@@ -206,7 +206,9 @@
 
     <!-- Código JavaScript -->
     <script src="../models/car.js"></script> <!-- Clase Car -->
-    <script src="../models/wheel.js"></script> <!-- Clase Whell -->
+    <script src="../models/wheel.js"></script> <!-- Clase Wheel -->
+    <script src="../controllers/dom-interact.js"></script> <!-- Archivo con los elementos del DOM guardados -->
+    <script src="../controllers/validations.js"></script> <!-- Archivo con las funciones de validación -->
     <script src="../controllers/controller.js"></script> <!-- Main -->
 
 </body>
