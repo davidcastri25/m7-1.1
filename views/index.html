@@ -1,0 +1,228 @@
+<!-- El codigo es capaz de crear un coche y mostrarlo por pantalla. Solo debemos modificar el fichero index.html y controller.ts -->
+
+<!-- 
+    Modifica el projecte anterior perquè li demani a l’usuari la informació del cotxe (matrícula, la marca i el seu color) a través d’un formulari i mostri en pantalla el resultat d’una forma més elegant. Tots els camps són obligatoris (per validar-los pot utilitzar codi de pràctiques anteriors).
+
+    Es recomana crear una variable car global, fora de les funcions (i si pot ser a la línia 1 del nostre controller.ts) com per exemple let car: Car; per tal que sigui accessible des de qualsevol funció.
+ -->
+
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>M071_01: TypeScript Vehícles</title>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <!-- Encabezado -->
+        <header class="row bg-light">
+            <!-- Título de la app -->
+            <h1 class="text-center text-primary p-2">Ejercicio Vehículos</h1>
+        </header>
+
+        <!-- Formulario de coche -->
+        <form action="#" method="post" id="carFormId" name="carForm" class="row mb-4 d-flex">
+
+            <!-- Matrícula -->
+            <div class="form-group mb-3 col-4">
+                <!-- Etiqueta -->
+                <label for="carMatricula" class="form-label">Matrícula</label>
+                <!-- Input -->
+                <input type="text" name="carMatricula" id="carMatricula" class="form-control" aria-describedby="matricula" placeholder="0000BBB">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorCarMatricula"></div>
+            </div>
+
+            <!-- Marca -->
+            <div class="form-group mb-3 col-4">
+                <!-- Etiqueta -->
+                <label for="carMarca" class="form-label">Marca</label>
+                <!-- Input -->
+                <input type="text" name="carMarca" id="carMarca" class="form-control" aria-describedby="marca"
+                    placeholder="Seat">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorCarMarca"></div>
+            </div>
+
+            <!-- Color -->
+            <div class="form-group mb-3 col-4">
+                <!-- Etiqueta -->
+                <label for="carColor" class="form-label">Color</label>
+                <!-- Input -->
+                <input type="text" name="carColor" id="carColor" class="form-control" aria-describedby="etiqueta"
+                    placeholder="Rojo">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorCarColor"></div>
+            </div>
+
+            <!-- Botón submit -->
+            <div>
+                <button type="submit" class="btn btn-primary" id="carSubmit">Crear coche</button>
+            </div>
+            
+        </form>
+
+        <!-- Formulario de rueda -->
+        <form action="#" method="post" id="wheelFormId" name="wheelForm" class="row mb-4 d-none">
+        
+            <!-- Marca 1 -->
+            <div class="form-group mb-3 col-3">
+                <!-- Etiqueta -->
+                <label for="wheelMarca1" class="form-label">Marca Rueda 1</label>
+                <!-- Input -->
+                <input type="text" name="wheelMarca1" id="wheelMarca1" class="form-control" aria-describedby="marca1"
+                    placeholder="DLC">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorWheelMarca1"></div>
+            </div>
+
+            <!-- Diámetro 1 -->
+            <div class="form-group mb-3 col-3">
+                <!-- Etiqueta -->
+                <label for="wheelDiametro1" class="form-label">Diámetro Rueda 1</label>
+                <!-- Input -->
+                <input type="text" name="wheelDiametro1" id="wheelDiametro1" class="form-control" aria-describedby="diametro1"
+                    placeholder="0.4">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorWheelDiametro1"></div>
+            </div>
+
+            <!-- Marca 2 -->
+            <div class="form-group mb-3 col-3">
+                <!-- Etiqueta -->
+                <label for="wheelMarca2" class="form-label">Marca Rueda 2</label>
+                <!-- Input -->
+                <input type="text" name="wheelMarca2" id="wheelMarca2" class="form-control" aria-describedby="marca2"
+                    placeholder="DLC">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorWheelMarca2"></div>
+            </div>
+            
+            <!-- Diámetro 2 -->
+            <div class="form-group mb-3 col-3">
+                <!-- Etiqueta -->
+                <label for="wheelDiametro2" class="form-label">Diámetro Rueda 2</label>
+                <!-- Input -->
+                <input type="text" name="wheelDiametro2" id="wheelDiametro2" class="form-control" aria-describedby="diametro2"
+                    placeholder="0.4">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorWheelDiametro2"></div>
+            </div>
+
+            <!-- Marca 3 -->
+            <div class="form-group mb-3 col-3">
+                <!-- Etiqueta -->
+                <label for="wheelMarca3" class="form-label">Marca Rueda 3</label>
+                <!-- Input -->
+                <input type="text" name="wheelMarca3" id="wheelMarca3" class="form-control" aria-describedby="marca3"
+                    placeholder="DLC">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorWheelMarca3"></div>
+            </div>
+            
+            <!-- Diámetro 3 -->
+            <div class="form-group mb-3 col-3">
+                <!-- Etiqueta -->
+                <label for="wheelDiametro3" class="form-label">Diámetro Rueda 3</label>
+                <!-- Input -->
+                <input type="text" name="wheelDiametro3" id="wheelDiametro3" class="form-control" aria-describedby="diametro3"
+                    placeholder="0.4">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorWheelDiametro3"></div>
+            </div>
+            
+            <!-- Marca 4 -->
+            <div class="form-group mb-3 col-3">
+                <!-- Etiqueta -->
+                <label for="wheelMarca4" class="form-label">Marca Rueda 4</label>
+                <!-- Input -->
+                <input type="text" name="wheelMarca4" id="wheelMarca4" class="form-control" aria-describedby="marca4"
+                    placeholder="DLC">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorWheelMarca4"></div>
+            </div>
+            
+            <!-- Diámetro 4 -->
+            <div class="form-group mb-3 col-3">
+                <!-- Etiqueta -->
+                <label for="wheelDiametro4" class="form-label">Diámetro Rueda 4</label>
+                <!-- Input -->
+                <input type="text" name="wheelDiametro4" id="wheelDiametro4" class="form-control" aria-describedby="diametro4"
+                    placeholder="0.4">
+                <!-- Div invalid feedback -->
+                <div class="invalid-feedback" id="errorWheelDiametro4"></div>
+            </div>
+                    
+            <!-- Botón submit -->
+            <div>
+                <button type="submit" class="btn btn-primary" id="wheelSubmit">Añadir ruedas</button>
+            </div>
+        
+        </form>
+    </div>
+    
+    <!-- Mostrar coches -->
+    <section class="mt-5">
+        <h3>Lista de coches</h3>
+
+        <!-- Output list -->
+        <div id="carInfo">
+            
+        </div>
+    </section>
+    
+    
+
+
+
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    -->
+
+
+    <!-- Código JavaScript -->
+    <script src="../models/car.js"></script> <!-- Clase Car -->
+    <script src="../models/wheel.js"></script> <!-- Clase Whell -->
+    <script src="../controllers/controller.js"></script> <!-- Main -->
+
+</body>
+
+</html>
+
+
+<!--<head>
+<script src="../models/car.js"></script>
+<script src="../models/wheel.js"></script>
+<script src="../controllers/controller.js"></script>
+</head>
+<body>
+    
+    <p id="carInfo"></p>
+
+    
+    <button onclick="createCar('1212SDS','SEAT','ROJO')">Create car</button>
+</body>  -->
