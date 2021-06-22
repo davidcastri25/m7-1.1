@@ -7,12 +7,9 @@ let car: Car;
 
 
 /* ////////// Evento lanzado por el formulario de coche ////////// */
-carForm.addEventListener("submit", (e: Event) => {
+CAR_FORM.addEventListener("submit", (e: Event) => {
     //Variables
-    let errores: number; //Para guardar el contador de errores de validación
-    let miMatricula: string; //Para guardar la matrícula validada
-    let miMarca: string; //Para guardar la marca validada
-    let miColor: string; //Para guardar el color validado
+    let errores: number; //Para guardar el contador de errores de validación    
 
     //Anulamos comportamiento por defecto del navegador por el evento submit. De esta forma no refrescará
     e.preventDefault();
@@ -23,33 +20,73 @@ carForm.addEventListener("submit", (e: Event) => {
     //Si errores es igual a 0, significa que el formulario está validado correctamente y podemos avanzar
     if (errores === 0) {
         //Creamos objeto Car
-        miMatricula = matricula.value;
-        miMarca = marca.value.toUpperCase();
-        miColor = color.value.toUpperCase();
-
-        car = new Car (miMatricula, miColor, miMarca);
-        carBBDD.push(car); //Guardamos el objeto car en el array de BBDD
+        crearCar();
         
         //Mostrar objeto Car creado (sin las ruedas)
         mostrarCar();
 
         //Cambiamos el formulario
+        cambiarFormulario();
     }
 });
 
+
+/* ////////// Evento lanzado por el formulario de rueda ////////// */
+WHEEL_FORM.addEventListener("submit", (e: Event) => {
+    //Variables
+    let errores: number; //Para guardar el contador de errores de validación    
+
+    //Anulamos comportamiento por defecto del navegador por el evento submit. De esta forma no refrescará
+    e.preventDefault();
+    
+    //Validamos llamando a la función correspondiente
+    errores = wheelValidate();
+
+    //Si errores es igual a 0, significa que el formulario está validado correctamente y podemos avanzar
+    if (errores === 0) {
+        //Añadimos al objeto car actual las ruedas generadas
+        addRuedas();
+        
+        //Mostrar objeto Car creado (sin las ruedas)
+        mostrarCar();
+
+        //Cambiamos el formulario
+        cambiarFormulario();
+    }
+});
+
+
+/* ////////// Función para crear coches  ////////// */
+function crearCar (): void {
+    let miMatricula: string; //Para guardar la matrícula validada
+    let miMarca: string; //Para guardar la marca validada
+    let miColor: string; //Para guardar el color validado
+
+    miMatricula = MATRICULA.value;
+    miMarca = MARCA.value.toUpperCase();
+    miColor = COLOR.value.toUpperCase();
+
+    car = new Car (miMatricula, miColor, miMarca);
+    carBBDD.push(car); //Guardamos el objeto car en el array de BBDD
+}
 
 
 /* ////////// Función para mostrar coches  ////////// */
 
 function mostrarCar (): void {
-    //Primero borramos todos los elementos hijos de container
-    container.innerHTML = '';
+    //Primero borramos todos los elementos hijos de container existenes, ya que vamos a generar de nuevo la lista
+    CONTAINER.innerHTML = '';
 
     //Declaramos las variables que vamos a usar en la función
     let carID = 1; //Identificador del coche que estamos creando
-    let li: HTMLLIElement; //Elemento que va a contener toda la información por cada coche
-    let h5Car, h5Wheel;
-    let pMatricula, pMarca, pColor, pRueda;
+    let li: HTMLLIElement; //Elemento que va a contener toda la información por cada coche, sería como una ficha de coche
+    let h5Car, h5Wheel; //Aquí irán los títulos de los dos apartados dentro de la ficha de coche
+    let pMatricula, pMarca, pColor; //Aquí irán los datos del coche
+    let wheelCounter: number; //Para ir aumentando en uno el identificador en las ruedas
+    let ulRueda: HTMLUListElement; //Por cada rueda crearemos una lista de datos
+    let liRueda: HTMLLIElement; //Aquí irá qué rueda es
+    let liMarcaRueda: HTMLLIElement; //Aquí irá la marca
+    let liDiametroRueda: HTMLLIElement; //Aquí irá el diámetro
 
     carBBDD.forEach(element => {
         
@@ -58,6 +95,11 @@ function mostrarCar (): void {
         li.id = "car-" + carID; //Añadimos una id para tener identificado el li en el que estamos
         li.classList.add("row");
         li.classList.add("mb-4");
+        li.classList.add("border");
+        li.classList.add("border-success");
+        li.classList.add("rounded");
+        li.classList.add("border-2");   
+        
 
         //Creamos un encabezado
         h5Car = document.createElement("h5");
@@ -88,57 +130,87 @@ function mostrarCar (): void {
             h5Wheel.innerText = "Ruedas para el coche " + carID + ":";
             li.append(h5Wheel); //Añadimos el encabezado al li
 
-            //Creamos parágrafos recorriendo el array de ruedas del objeto actual
+            //Variable contadora de ruedas
+            wheelCounter = 1;
+
+            //Creamos listas recorriendo el array de ruedas del objeto actual
             element.wheels.forEach(element => {
-                pRueda = document.createElement("p");
-                pRueda.innerText = "Rueda 1: " + "Marca: " + element.brand + "Diámetro: " + element.diameter;        
-                pRueda.classList.add("col-4");
-                li.append(pRueda);
+                //Creamos los elementos
+                ulRueda = document.createElement("ul");
+                liRueda = document.createElement("li");
+                liMarcaRueda = document.createElement("li");
+                liDiametroRueda = document.createElement("li");
+                
+
+                //Asignamos cuánto va a ocupar cada lista de info de rueda
+                ulRueda.classList.add("col-3");
+                ulRueda.classList.add("list-unstyled");
+
+                //Asignamos contenido
+                liRueda.innerText = "Rueda " + wheelCounter;
+                liMarcaRueda.innerText =  "Marca: " + element.brand;
+                liDiametroRueda.innerText = "Diámetro: " + element.diameter;
+
+                //Añadimos los elementos dentro de ul
+                ulRueda.append(liRueda);
+                ulRueda.append(liMarcaRueda);
+                ulRueda.append(liDiametroRueda);
+
+                //Añadimos el ul dentro del li general de coche
+                li.append(ulRueda);
+                
+                wheelCounter ++;
             });
         }
 
         //En el container que hemos asignado en dom-interact añadimos el li
-        container.append(li);
+        CONTAINER.append(li);
 
         //Aumentamos indice de carID
         carID ++;
-    });
-
-    /*//Primero creamos la entrada en la lista para el coche en cuestión
-    const li = document.createElement("li");
-    li.id = "car-" + carID; //Añadimos una id para tener identificado el li en el que estamos
-    li.classList.add("row");
-    
-    //Creamos un encabezado
-    const h5 = document.createElement("h5");
-    h5.innerText = "Coche número " + carID + ":";
-    li.append(h5); //Añadimos el encabezado al li
-
-    //Creamos parágrafos
-    const p1 = document.createElement("p");
-    const p2 = document.createElement("p");
-    const p3 = document.createElement("p");
-
-    p1.innerText = "Matrícula: " + car.plate;
-        // p1.classList.add("mx-3");
-        // p1.classList.add("d-flex");
-        p1.classList.add("col-4");
-    p2.innerText = "Marca: " + car.brand;
-        // p2.classList.add("mx-3");
-        // p2.classList.add("d-flex");
-        p2.classList.add("col-4");
-    p3.innerText = "Color: " + car.color;
-        // p3.classList.add("mx-3");
-        // p3.classList.add("d-flex");
-        p3.classList.add("col-4");
-
-    li.append(p1);
-    li.append(p2);
-    li.append(p3);
-    
-    //En el container que hemos asignado en dom-interact
-    container.append(li);  */
+    });    
 }
+
+
+/* ////////// Función para añadir ruedas  ////////// */
+function addRuedas(): void {
+    //Creamos un objeto de la clase Wheel por cada rueda
+    let wheel1 = new Wheel (parseFloat(DIAMETRO_1.value), MARCA_1.value.toUpperCase());
+    let wheel2 = new Wheel (parseFloat(DIAMETRO_2.value), MARCA_2.value.toUpperCase());
+    let wheel3 = new Wheel (parseFloat(DIAMETRO_3.value), MARCA_3.value.toUpperCase());
+    let wheel4 = new Wheel (parseFloat(DIAMETRO_4.value), MARCA_4.value.toUpperCase());
+
+    //Llamamos al método de la clase Car addWheel y añadimos a la propiedad wheels (que es un array), las 4 ruedas 
+    car.addWheel(wheel1);
+    car.addWheel(wheel2);
+    car.addWheel(wheel3);
+    car.addWheel(wheel4);
+}
+
+
+/* ////////// Función para cambiar formularios  ////////// */
+function cambiarFormulario(): void {
+    //Miramos si el formulario de coche está visible u oculto, y lo intercambiamos
+    if (CAR_FORM.classList.contains("d-flex")) {
+        CAR_FORM.classList.remove("d-flex");
+        CAR_FORM.classList.add("d-none");
+    }
+    else if (CAR_FORM.classList.contains("d-none")) {
+        CAR_FORM.classList.remove("d-none");
+        CAR_FORM.classList.add("d-flex");
+    }
+
+    //Miramos si el formulario de ruedas está visible u oculto, y lo intercambiamos
+    if (WHEEL_FORM.classList.contains("d-flex")) {
+        WHEEL_FORM.classList.remove("d-flex");
+        WHEEL_FORM.classList.add("d-none");
+    }
+    else if (WHEEL_FORM.classList.contains("d-none")) {
+        WHEEL_FORM.classList.remove("d-none");
+        WHEEL_FORM.classList.add("d-flex");
+    }
+}
+
 
 //Función de muestra que crea un coche. Parámetros: matrícula (string), marca (string), color (string)
 /*function createCar (plate: string, brand: string, color: string){
