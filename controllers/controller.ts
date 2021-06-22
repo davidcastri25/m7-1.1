@@ -25,8 +25,11 @@ CAR_FORM.addEventListener("submit", (e: Event) => {
         //Mostrar objeto Car creado (sin las ruedas)
         mostrarCar();
 
+        //Limpiamos el formulario de wheel
+        limpiarWheelForm();
+
         //Cambiamos el formulario
-        cambiarFormulario();
+        cambiarFormulario();    
     }
 });
 
@@ -49,6 +52,9 @@ WHEEL_FORM.addEventListener("submit", (e: Event) => {
         
         //Mostrar objeto Car creado (sin las ruedas)
         mostrarCar();
+
+        //Limpiamos el formulario de car
+        limpiarCarForm();
 
         //Cambiamos el formulario
         cambiarFormulario();
@@ -92,9 +98,10 @@ function mostrarCar (): void {
         
         //Creamos la entrada en la lista para el coche en cuestión
         li = document.createElement("li");
-        li.id = "car-" + carID; //Añadimos una id para tener identificado el li en el que estamos
+        //Añadimos clases
         li.classList.add("row");
         li.classList.add("mb-4");
+        li.classList.add("p-2");
         li.classList.add("border");
         li.classList.add("border-success");
         li.classList.add("rounded");
@@ -209,6 +216,42 @@ function cambiarFormulario(): void {
         WHEEL_FORM.classList.remove("d-none");
         WHEEL_FORM.classList.add("d-flex");
     }
+}
+
+
+/* ////////// Función que limpia los datos del formulario car ////////// */
+function limpiarCarForm(): void {
+    //Seleccionamos todos los inputs que están dentro del formulario de coche
+    const CAR_INPUTS = CAR_FORM.querySelectorAll("input");
+    
+    //Recorremos el NodeList
+    CAR_INPUTS.forEach(input => {
+        //Vaciamos el input
+        input.value = "";
+
+        //Si el input tiene la clase is-valid de bootstrap, la sacamos (is-invalid no la puede tener porque el programa no avanzaría)
+        if(input.classList.contains("is-valid")) {
+            input.classList.remove("is-valid");
+        }
+    });
+}
+
+
+/* ////////// Función que limpia los datos del formulario wheel ////////// */
+function limpiarWheelForm(): void {
+    //Seleccionamos todos los inputs que están dentro del formulario de ruedas
+    const WHEEL_INPUTS = WHEEL_FORM.querySelectorAll("input");
+    
+    //Recorremos el NodeList
+    WHEEL_INPUTS.forEach(input => {
+        //Vaciamos el input
+        input.value = "";
+
+        //Si el input tiene la clase is-valid de bootstrap, la sacamos (is-invalid no la puede tener porque el programa no avanzaría)
+        if(input.classList.contains("is-valid")) {
+            input.classList.remove("is-valid");
+        }
+    });
 }
 
 

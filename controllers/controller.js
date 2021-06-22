@@ -17,6 +17,8 @@ CAR_FORM.addEventListener("submit", function (e) {
         crearCar();
         //Mostrar objeto Car creado (sin las ruedas)
         mostrarCar();
+        //Limpiamos el formulario de wheel
+        limpiarWheelForm();
         //Cambiamos el formulario
         cambiarFormulario();
     }
@@ -35,6 +37,8 @@ WHEEL_FORM.addEventListener("submit", function (e) {
         addRuedas();
         //Mostrar objeto Car creado (sin las ruedas)
         mostrarCar();
+        //Limpiamos el formulario de car
+        limpiarCarForm();
         //Cambiamos el formulario
         cambiarFormulario();
     }
@@ -67,9 +71,10 @@ function mostrarCar() {
     carBBDD.forEach(function (element) {
         //Creamos la entrada en la lista para el coche en cuestión
         li = document.createElement("li");
-        li.id = "car-" + carID; //Añadimos una id para tener identificado el li en el que estamos
+        //Añadimos clases
         li.classList.add("row");
         li.classList.add("mb-4");
+        li.classList.add("p-2");
         li.classList.add("border");
         li.classList.add("border-success");
         li.classList.add("rounded");
@@ -162,6 +167,34 @@ function cambiarFormulario() {
         WHEEL_FORM.classList.remove("d-none");
         WHEEL_FORM.classList.add("d-flex");
     }
+}
+/* ////////// Función que limpia los datos del formulario car ////////// */
+function limpiarCarForm() {
+    //Seleccionamos todos los inputs que están dentro del formulario de coche
+    var CAR_INPUTS = CAR_FORM.querySelectorAll("input");
+    //Recorremos el NodeList
+    CAR_INPUTS.forEach(function (input) {
+        //Vaciamos el input
+        input.value = "";
+        //Si el input tiene la clase is-valid de bootstrap, la sacamos (is-invalid no la puede tener porque el programa no avanzaría)
+        if (input.classList.contains("is-valid")) {
+            input.classList.remove("is-valid");
+        }
+    });
+}
+/* ////////// Función que limpia los datos del formulario wheel ////////// */
+function limpiarWheelForm() {
+    //Seleccionamos todos los inputs que están dentro del formulario de ruedas
+    var WHEEL_INPUTS = WHEEL_FORM.querySelectorAll("input");
+    //Recorremos el NodeList
+    WHEEL_INPUTS.forEach(function (input) {
+        //Vaciamos el input
+        input.value = "";
+        //Si el input tiene la clase is-valid de bootstrap, la sacamos (is-invalid no la puede tener porque el programa no avanzaría)
+        if (input.classList.contains("is-valid")) {
+            input.classList.remove("is-valid");
+        }
+    });
 }
 //Función de muestra que crea un coche. Parámetros: matrícula (string), marca (string), color (string)
 /*function createCar (plate: string, brand: string, color: string){
